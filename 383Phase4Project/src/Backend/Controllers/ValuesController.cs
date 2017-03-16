@@ -11,6 +11,7 @@ namespace Backend.Controllers
     {
         // GET api/values
         [HttpGet]
+        [Route("/api/values")]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };

@@ -8,23 +8,26 @@ using Backend.Data;
 namespace Backend.Migrations
 {
     [DbContext(typeof(Phase4Context))]
-    [Migration("20170316175027_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20170316203957_Seed")]
+    partial class Seed
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
+                .HasAnnotation("ProductVersion", "1.1.1")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Backend.Models.Airport", b =>
                 {
                     b.Property<int>("ID")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Country");
+
+                    b.Property<string>("Location");
 
                     b.Property<string>("Name");
-
-                    b.Property<string>("ShorterName");
 
                     b.Property<string>("ThreeLetterCode");
 

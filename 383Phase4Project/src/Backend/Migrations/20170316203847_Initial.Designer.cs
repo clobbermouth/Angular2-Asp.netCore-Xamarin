@@ -8,9 +8,10 @@ using Backend.Data;
 namespace Backend.Migrations
 {
     [DbContext(typeof(Phase4Context))]
-    partial class Phase4ContextModelSnapshot : ModelSnapshot
+    [Migration("20170316203847_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")
