@@ -1,11 +1,5 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Backend.Data;
 using Backend.Models;
 
 namespace Backend.Controllers
@@ -14,127 +8,77 @@ namespace Backend.Controllers
     [Route("api/Airports")]
     public class AirportsController : Controller
     {
-        private readonly Phase4Context _context;
+        private readonly IAirportRepository _airportRepository;
 
-        public AirportsController(Phase4Context context)
+        public AirportsController(IAirportRepository airportRepository)
         {
-            _context = context;
+            _airportRepository = airportRepository;
         }
 
         // GET: api/Airports
         [HttpGet]
+        [Route("api/Airports")]
         public IEnumerable<Airport> GetAirports()
         {
-            return _context.Airports;
+            return _airportRepository.GetAirports();
         }
 
         // GET: api/Airports/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetAirport([FromRoute] int id)
+        [HttpGet("{id}", Name = "GetAirport")]
+        public IActionResult GetById( int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var airport = await _context.Airports.SingleOrDefaultAsync(m => m.ID == id);
-
-            if (airport == null)
+            var item = _airportRepository.FindAirport(id);
+            if (item == null)
             {
                 return NotFound();
             }
-
-            return Ok(airport);
+            return new ObjectResult(item);
         }
 
         // PUT: api/Airports/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAirport([FromRoute] int id, [FromBody] Airport airport)
+        public IActionResult Update(int id, [FromBody] Airport item)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != airport.ID)
+            if (item == null || item.ID != id)
             {
                 return BadRequest();
             }
-
-            _context.Entry(airport).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AirportExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/Airports
-        [HttpPost]
-        public async Task<IActionResult> PostAirport([FromBody] Airport airport)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            _context.Airports.Add(airport);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (AirportExists(airport.ID))
-                {
-                    return new StatusCodeResult(StatusCodes.Status409Conflict);
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtAction("GetAirport", new { id = airport.ID }, airport);
-        }
-
-        // DELETE: api/Airports/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAirport([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var airport = await _context.Airports.SingleOrDefaultAsync(m => m.ID == id);
+            var airport = _airportRepository.FindAirport(id);
             if (airport == null)
             {
                 return NotFound();
             }
+            airport.Name = item.Name;
+            airport.Country = item.Country;
+            airport.ThreeLetterCode = item.ThreeLetterCode;
 
-            _context.Airports.Remove(airport);
-            await _context.SaveChangesAsync();
-
-            return Ok(airport);
+            _airportRepository.UpdateAirport(airport);
+            return new NoContentResult();
         }
 
-        private bool AirportExists(int id)
+        // POST: api/Airports
+        [HttpPost]
+        public IActionResult Create([FromBody] Airport item)
         {
-            return _context.Airports.Any(e => e.ID == id);
+            if (item == null)
+            {
+                return BadRequest();
+            }
+            _airportRepository.AddAirport(item);
+            return CreatedAtRoute("GetAirport", new {id = item.ID}, item);
+        }
+
+        // DELETE: api/Airports/5
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var airport = _airportRepository.FindAirport(id);
+            if (airport == null)
+            {
+                return NotFound();
+            }
+            _airportRepository.RemoveAirport(id);
+            return new NoContentResult();
         }
     }
 }

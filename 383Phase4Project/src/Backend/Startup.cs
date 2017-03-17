@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Backend.Data;
+using Backend.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +34,9 @@ namespace Backend
             services.AddDbContext<Phase4Context>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             // Add framework services.
+            services.AddSingleton<IAirportRepository, AirportRepository>();
             services.AddMvc();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
