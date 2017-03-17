@@ -8,7 +8,7 @@ using Backend.Data;
 namespace Backend.Migrations
 {
     [DbContext(typeof(Phase4Context))]
-    [Migration("20170316203847_Initial")]
+    [Migration("20170316232612_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

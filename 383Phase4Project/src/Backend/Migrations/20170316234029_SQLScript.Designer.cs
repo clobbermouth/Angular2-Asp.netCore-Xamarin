@@ -8,8 +8,8 @@ using Backend.Data;
 namespace Backend.Migrations
 {
     [DbContext(typeof(Phase4Context))]
-    [Migration("20170316203957_Seed")]
-    partial class Seed
+    [Migration("20170316234029_SQLScript")]
+    partial class SQLScript
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Backend.Migrations
 {
-    public partial class Seed : Migration
+    public partial class SQLScript : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            var sqlFile = Path.Combine(ApplicationEnvironment.ApplicationBasePath, @"C:\Users\Cory\Source\Repos\Angular2-Asp.netCore-Xamarin\383Phase4Project\src\Backend\Migrations\SQL Script\Insert.sql");
+            var sqlFile = Path.Combine(ApplicationEnvironment.ApplicationBasePath, @"Insert.sql");
             migrationBuilder.Sql(File.ReadAllText(sqlFile));
         }
 

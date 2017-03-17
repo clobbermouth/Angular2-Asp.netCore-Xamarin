@@ -1,5 +1,5 @@
 ﻿INSERT INTO Airport
-(Name, Location, Country, ThreeLetterCode)
+(Name, [Location], Country, ThreeLetterCode)
 VALUES
 ('Barter Island LRRS Airport','Barter Island','United States','BTI')
 ,('Cape Lisburne LRRS Airport','Cape Lisburne','United States','LUR')
@@ -676,12 +676,12 @@ VALUES
 ,('Chevak Airport','Chevak','United States','VAK')
 ,('Wrangell Airport','Wrangell','United States','WRG')
 ,('Kalaupapa Airport','Molokai','United States','LUP')
-,('Aleknagik / New Airport','Aleknagik','United States','WKK','5A8')
+,('Aleknagik / New Airport','Aleknagik','United States','WKK')
 ,('Mercer County Airport','Bluefield','United States','BLF')
 ,('Mid Delta Regional Airport','Greenville','United States','GLH')
 ,('Tri Cities Airport','Pasco','United States','PSC')
-,('Akutan Seaplane Base','Akutan','United States','KQA','KQA')
-,('Lopez Island Airport','Lopez','United States','LPS','S31')
+,('Akutan Seaplane Base','Akutan','United States','KQA')
+,('Lopez Island Airport','Lopez','United States','LPS')
 ,('Waikoloa Heliport','Waikoloa Village','United States','WKL')
 ,('Worcester Regional Airport','Worcester','United States','ORH')
 ,('Bremerton National Airport','Bremerton','United States','PWT')
